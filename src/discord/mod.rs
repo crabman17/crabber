@@ -1,4 +1,5 @@
 pub use client::Client;
+pub use guild::Guild;
 
 pub mod grabber;
 pub mod client;

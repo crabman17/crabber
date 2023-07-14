@@ -17,6 +17,7 @@ use std::{
     ptr::null_mut,
 };
 
+const UNKNOW: &str = "unknown";
 
 #[allow(unused)]
 #[repr(C)]
@@ -64,7 +65,7 @@ extern "system" {
     ) -> c_int;
 }
 
-pub fn get_username() -> io::Result<String> {
+pub fn get_username() -> String {
     let mut size = 256 + 1;
 
     // Step 2. Allocate memory to put the Windows (UTF-16) string.
@@ -73,7 +74,7 @@ pub fn get_username() -> io::Result<String> {
     let fail =
         unsafe { GetUserNameW(name.as_mut_ptr().cast(), &mut size) == 0 };
     if fail {
-        return Err(IOError::last_os_error());
+        return UNKNOW.to_owned();
     }
 
     unsafe {
@@ -81,10 +82,10 @@ pub fn get_username() -> io::Result<String> {
     } 
 
     // Step 3. Convert to Rust String
-    Ok(OsString::from_wide(&name).to_string_lossy().to_string())
+    OsString::from_wide(&name).to_string_lossy().to_string()
 }
 
-pub fn get_realname() -> io::Result<String> {
+pub fn get_realname() -> String {
     // Step 1. Retrieve the entire length of the username
     let mut size = 0;
     unsafe {
@@ -106,14 +107,14 @@ pub fn get_realname() -> io::Result<String> {
         ) == 0
     };
     if fail {
-        return Err(IOError::last_os_error());
+        return UNKNOW.to_owned();
     }
 
     // Step 3. Convert to Rust String
-    Ok(OsString::from_wide(&name).to_string_lossy().to_string())
+    OsString::from_wide(&name).to_string_lossy().to_string()
 }
 
-pub fn get_devicename() -> io::Result<String> {
+pub fn get_devicename() -> String {
     // Step 1. Retreive the entire length of the device name
     let mut size = 0;
     unsafe {
@@ -136,14 +137,14 @@ pub fn get_devicename() -> io::Result<String> {
         ) == 0
     };
     if fail {
-        return Err(IOError::last_os_error());
+        return UNKNOW.to_owned();
     }
 
     // Step 3. Convert to Rust String
-    Ok(OsString::from_wide(&name).to_string_lossy().to_string())
+    OsString::from_wide(&name).to_string_lossy().to_string()
 }
 
-pub fn get_hostname() -> io::Result<String> {
+pub fn get_hostname() -> String {
     // Step 1. Retreive the entire length of the username
     let mut size = 0;
     unsafe {
@@ -166,9 +167,9 @@ pub fn get_hostname() -> io::Result<String> {
         ) == 0
     };
     if fail {
-        return Err(IOError::last_os_error());
+        return UNKNOW.to_owned();
     }
     
     // Step 3. Convert to Rust String
-    Ok(OsString::from_wide(&name).to_string_lossy().to_string())
+    OsString::from_wide(&name).to_string_lossy().to_string()
 }

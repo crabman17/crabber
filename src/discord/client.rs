@@ -27,8 +27,8 @@ impl Client {
         }
     }
 
-    #[inline]
-    pub async fn set_token(&mut self, token: String) {
+    #[inline(always)]
+    pub fn set_token(&mut self, token: String) {
         self.Token = token;
     }
 
